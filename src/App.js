@@ -37,9 +37,13 @@ function App() {
         <Form
           autoComplete="off"
           layout="vertical"
-    
           onFinish={(values) => {
-            console.log({ values });
+            // Perform form validation here
+            if (values.email && values.password && values.confirmPassword) {
+              console.log({ values });
+            } else {
+              console.log("Please fill in all required fields.");
+            }
           }}
           onFinishFailed={(error) => {
             console.log({ error });
