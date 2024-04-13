@@ -1,14 +1,43 @@
+// App.js
 import "./App.css";
-import { Form, Button, Checkbox, DatePicker, Input, Select, Space } from "antd";
+import { useState } from "react"; // Import useState
+import {
+  Form,
+  Button,
+  Checkbox,
+  DatePicker,
+  Input,
+  Select,
+  Row,
+  Col,
+  Divider,
+} from "antd";
 
 function App() {
+  // Gender list items
+  const genderItems = [{ name: "Male" }, { name: "Female" }, { name: "Other" }];
+
+  const operations = [
+    { name: "Sales" },
+    { name: "Service" },
+    { name: "Common" },
+  ];
+
+  const locations = [
+    { name: "Borivali" },
+    { name: "Kandivali" },
+    { name: "Chowpaty" },
+  ];
+  // State to manage selected locations
+  const [selectedLocations, setSelectedLocations] = useState([]);
+
   return (
     <div className="App">
       <header className="App-header">
         <Form
           autoComplete="off"
-          labelCol={{ span: 10 }}
-          wrapperCol={{ span: 14 }}
+          layout="vertical"
+    
           onFinish={(values) => {
             console.log({ values });
           }}
@@ -16,122 +45,175 @@ function App() {
             console.log({ error });
           }}
         >
-          <Form.Item
-            name="email"
-            label="Email"
-            rules={[
-              {
-                required: true,
-                message: "Please enter your email",
-              },
-              { type: "email", message: "Please enter a valid email" },
-            ]}
-            hasFeedback
-          >
-            <Input placeholder="Type your email" />
-          </Form.Item>
+          <Row gutter={[16, 16]}>
+            <Col span={8}>
+              <Form.Item
+                label={<CustomLabel label="Email" />}
+                name="email"
+                rules={[
+                  { required: true, message: "Please enter your email" },
+                  { type: "email", message: "Please enter a valid email" },
+                ]}
+                hasFeedback
+              >
+                <Input placeholder="Type your email" />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item
+                label={<CustomLabel label="Password" />}
+                name="password"
+                rules={[
+                  { required: true },
+                  { min: 6 },
+                  {
+                    validator: (_, value) =>
+                      value && value.includes("A")
+                        ? Promise.resolve()
+                        : Promise.reject("Password does not match criteria."),
+                  },
+                ]}
+                hasFeedback
+              >
+                <Input.Password placeholder="Type your password" />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item
+                label={<CustomLabel label="Confirm Password" />}
+                name="confirmPassword"
+                dependencies={["password"]}
+                rules={[
+                  { required: true },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("password") === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject("Passwords do not match.");
+                    },
+                  }),
+                ]}
+                hasFeedback
+              >
+                <Input.Password placeholder="Confirm your password" />
+              </Form.Item>
+            </Col>
+          </Row>
 
-          <Form.Item
-            name="password"
-            label="Password"
-            rules={[
-              {
-                required: true,
-              },
-              { min: 6 },
-              {
-                validator: (_, value) =>
-                  value && value.includes("A")
-                    ? Promise.resolve()
-                    : Promise.reject("Password does not match criteria."),
-              },
-            ]}
-            hasFeedback
-          >
-            <Input.Password placeholder="Type your password" />
-          </Form.Item>
-
-          <Form.Item
-            name="confirmPassword"
-            label="Confirm Password"
-            dependencies={["password"]}
-            rules={[
-              {
-                required: true,
-              },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (!value || getFieldValue("password") === value) {
-                    return Promise.resolve();
+          <Row gutter={[16, 16]}>
+            <Col span={8}>
+              <Form.Item label="Gender" name="gender">
+                <Select
+                  placeholder="Select gender"
+                  style={{ textAlign: "left" }}
+                  showSearch
+                  filterOption={(input, option) =>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
                   }
-                  return Promise.reject(
-                    "The two passwords that you entered does not match."
-                  );
-                },
-              }),
-            ]}
-            hasFeedback
-          >
-            <Input.Password placeholder="Confirm your password" />
-          </Form.Item>
+                >
+                  {genderItems.map((item, index) => (
+                    <Select.Option key={index} value={item.name}>
+                      {item.name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
 
-          <Form.Item name="gender" label="Gender" requiredMark="optional">
-            <Select placeholder="Select your gender">
-              <Select.Option value="male">Male</Select.Option>
-              <Select.Option value="female">Female</Select.Option>
-            </Select>
-          </Form.Item>
+            <Col span={8}>
+              <Form.Item
+                label={<CustomLabel label="Dealer Operations" />}
+                name="Operations"
+              >
+                <Select
+                  placeholder="Select Dealer operation"
+                  style={{ textAlign: "left" }}
+                  showSearch
+                  filterOption={(input, option) =>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  {operations.map((item, index) => (
+                    <Select.Option key={index} value={item.name}>
+                      {item.name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item
+                label={<CustomLabel label="Date of Birth" />}
+                name="dob"
+                rules={[
+                  {
+                    required: false,
+                    message: "Please provide your date of birth",
+                  },
+                ]}
+                hasFeedback
+              >
+                <DatePicker
+                  style={{ width: "100%" }}
+                  picker="date"
+                  placeholder="Choose date of birth"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
 
           <Form.Item
-            name="dob"
-            label="Date of Birth"
-            rules={[
-              {
-                required: true,
-                message: "Please provide your date of birth",
-              },
-            ]}
-            hasFeedback
-          >
-            <DatePicker
-              style={{ width: "100%" }}
-              picker="date"
-              placeholder="Chose date of birth"
-            />
-          </Form.Item>
-
-          <Form.Item
+            label={<CustomLabel label="Website" />}
             name="website"
-            label="Website"
-            rules={[{ type: "url", message: "Please enter a valid url" }]}
+            rules={[{ type: "url", message: "Please enter a valid URL" }]}
             hasFeedback
           >
-            <Input placeholder="Add your website url" />
+            <Input placeholder="Add your website URL" />
           </Form.Item>
 
-          <Form.Item
-            name="agreement"
-            wrapperCol={{ span: 24 }}
-            valuePropName="checked"
-            rules={[
-              {
-                validator: (_, value) =>
-                  value
-                    ? Promise.resolve()
-                    : Promise.reject(
-                        "To proceed, you need to agree with our terms and conditions"
-                      ),
-              },
-            ]}
-          >
-            <Checkbox>
-              {" "}
-              Agree to our <a href="#">Terms and Conditions</a>
-            </Checkbox>
-          </Form.Item>
+          <Row gutter={[16, 16]}>
+            <Col span={12}>
+              <Form.Item
+                label={<CustomLabel label="Aadhaar Card No." />}
+                name="aadhar"
+              >
+                <Input placeholder="Enter aadhar no. (1111 2222 3333)" />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Dealer Location" name="locations">
+                <Select
+                  placeholder="Select dealer location"
+                  style={{ textAlign: "left" }}
+                  mode="multiple"
+                  dropdownRender={(menu) => (
+                    <div>
+                      <Divider style={{ margin: "4px 0" }} />
+                      {menu}
+                    </div>
+                  )}
+                  value={selectedLocations} // Use selectedLocations as value
+                  onChange={(values) => setSelectedLocations(values)} // Update selectedLocations state
+                >
+                  {locations.map((item, index) => (
+                    <Select.Option key={index} value={item.name}>
+                      <Checkbox checked={selectedLocations.includes(item.name)}>
+                        {item.name}
+                      </Checkbox>
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
 
-          <Form.Item wrapperCol={{ span: 24 }}>
-            <Button block type="primary" htmlType="submit">
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
               Register
             </Button>
           </Form.Item>
@@ -140,5 +222,15 @@ function App() {
     </div>
   );
 }
+
+// CustomLabel component to wrap label text and asterisk
+const CustomLabel = ({ label }) => (
+  <span>
+    {label}
+    <span style={{ color: "red", marginLeft: "3px", fontSize: "medium" }}>
+      *
+    </span>
+  </span>
+);
 
 export default App;
