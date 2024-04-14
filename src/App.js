@@ -30,6 +30,14 @@ function App() {
   ];
   // State to manage selected locations
   const [selectedLocations, setSelectedLocations] = useState([]);
+  // Form reference to reset fields
+  const [form] = Form.useForm();
+
+  // Function to handle form reset
+  const handleCancel = () => {
+    form.resetFields();
+    setSelectedLocations([]); // Reset selected locations
+  };
 
   return (
     <div className="App">
@@ -37,6 +45,7 @@ function App() {
         <Form
           autoComplete="off"
           layout="vertical"
+          form={form} // Set form instance
           onFinish={(values) => {
             // Perform form validation here
             if (values.email && values.password && values.confirmPassword) {
@@ -48,6 +57,7 @@ function App() {
           onFinishFailed={(error) => {
             console.log({ error });
           }}
+          initialValues={{}}
         >
           <Row gutter={[16, 16]}>
             <Col span={8}>
@@ -219,6 +229,13 @@ function App() {
           <Form.Item>
             <Button type="primary" htmlType="submit">
               Register
+            </Button>
+            <Button
+              type="default"
+              onClick={handleCancel}
+              style={{ marginLeft: "8px" }}
+            >
+              Cancel
             </Button>
           </Form.Item>
         </Form>

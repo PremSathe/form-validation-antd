@@ -55,3 +55,7 @@
 .custom-select .ant-select-selector .ant-select-suffix {
   display: none;
 }
+
+:where(.css-dev-only-do-not-override-1kuana8).ant-select .ant-select-arrow {
+  color: red;
+}
