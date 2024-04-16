@@ -298,7 +298,7 @@ function App() {
                   gutter={[16, 16]}
                   align="middle"
                   justify="center"
-                  style={{ marginTop: "40px" }}
+                  style={{ marginTop: "40px", marginBottom: "40px" }}
                 >
                   <Col span={12}>
                     <Button type="primary" htmlType="submit">
