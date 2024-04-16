@@ -1,9 +1,9 @@
+/* App.css */
 .App {
   text-align: center;
 }
 
 .App-header {
-  /* background-color: #282c34; */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -17,45 +17,57 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  padding: 20px; /* Added padding */
 }
 
 .form-item {
-  width: calc(33.33% - 20px); /* Adjust the width based on your preference */
+  width: calc(33.33% - 20px);
   margin: 10px;
+  padding: 15px; /* Added padding */
 }
 
 @media (max-width: 768px) {
   .form-item {
-    width: calc(50% - 20px); /* Adjust the width for smaller screens */
+    width: calc(50% - 20px);
   }
 }
 
-:where(.css-dev-only-do-not-override-1kuana8).ant-form-item
-  .ant-form-item-explain-error {
+:where(.css-dev-only-do-not-override-1kuana8).ant-form-item .ant-form-item-explain-error {
   text-align: left;
 }
 
-:where(
-    .css-dev-only-do-not-override-1kuana8
-  ).ant-input-outlined.ant-input-status-error:not(.ant-input-disabled)
-  .ant-input-suffix {
+:where(.css-dev-only-do-not-override-1kuana8).ant-input-outlined.ant-input-status-error:not(.ant-input-disabled) .ant-input-suffix {
   display: none;
 }
-:where(.css-dev-only-do-not-override-1kuana8).ant-form-item
-  .ant-form-item-label
-  > label.ant-form-item-required:not(
-    .ant-form-item-required-mark-optional
-  )::before {
+
+:where(.css-dev-only-do-not-override-1kuana8).ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
   display: none;
 }
 
 .anticon svg {
   display: none;
 }
+
 .custom-select .ant-select-selector .ant-select-suffix {
   display: none;
 }
 
 :where(.css-dev-only-do-not-override-1kuana8).ant-select .ant-select-arrow {
-  color: red;
+  color: #ff3e5b;
+  font-size: 16px;
+}
+
+.custom-dropdown .ant-select-selector {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.2735 4.50662C14.4346 4.65772 14.4428 4.91085 14.2917 5.07202L8.29172 11.472C8.2161 11.5527 8.11046 11.5984 7.9999 11.5984C7.88934 11.5984 7.7837 11.5527 7.70809 11.472L1.70809 5.07201C1.55699 4.91085 1.56516 4.65772 1.72632 4.50662C1.88749 4.35553 2.14062 4.3637 2.29172 4.52486L7.9999 10.6136L13.7081 4.52486C13.8592 4.3637 14.1123 4.35553 14.2735 4.50662Z" fill="%23FF3E5B"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right center;
+  padding-right: 20px; /* Adjust the padding as needed to ensure space for the icon */
+}
+
+:where(.css-dev-only-do-not-override-1kuana8).ant-btn-primary {
+  background: #ff3e5b;
+}
+
+:where(.css-dev-only-do-not-override-1kuana8).ant-upload-wrapper .ant-upload-drag {
+  height: 90%;
 }
