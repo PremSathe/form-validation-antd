@@ -1,4 +1,4 @@
-/* App.css */
+\/* App.css */
 
 .App {
   text-align: center;
@@ -75,11 +75,10 @@
   padding-right: 20px; /* Adjust the padding as needed to ensure space for the icon */
 }
 
-:where(.css-dev-only-do-not-override-1kuana8).ant-btn-primary {
-  background: #ff3e5b;
+.custom-dropdown.select-open .ant-select-arrow {
+  transform: rotate(180deg);
 }
-
-:where(.css-dev-only-do-not-override-1kuana8).ant-upload-wrapper
-  .ant-upload-drag {
-  height: 90%;
+.ant-col .ant-col-12 .css-dev-only-do-not-override-1kuana8 {
+  display: flex;
+  justify-content: center;
 }
